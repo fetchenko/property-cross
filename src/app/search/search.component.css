@@ -1,0 +1,39 @@
+.jumbotron {
+  padding-top: 60px;
+  padding-bottom: 20px;
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+}
+@media (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+}
+.container-narrow > hr {
+  margin: 30px 0;
+}
+.form-search {
+  max-width: 330px;
+  padding-bottom: 10px;
+  margin: 0 auto;
+}
+.form-search .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-search .form-control:focus {
+  z-index: 2;
+}
+.form-search input {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.list-group {
+  min-height: 240px;
+}
