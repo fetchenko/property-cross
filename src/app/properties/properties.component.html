@@ -1,10 +1,17 @@
 <div class="property">
-  <app-filters></app-filters>
-
-  <h1 *ngIf="selectedCity">{{selectedCity.text}}</h1>
-  <h1 *ngIf="result">Found {{result.length}}</h1>
-  <div *ngFor="let res of result">
-    <p>bathroom number : {{res['bathroom_number']}}</p>
-    <img  width="300" height="400" [src]="res['img_url']">
+  <div class="container">
+    <div class="jumbotron">
+      <app-filters></app-filters>
+      <div class="properties">
+        <div class="property" *ngFor="let res of result">
+          <img [src]="res['img_url']">
+          <div class="description">
+            <p>bathroom number : {{res['bathroom_number']}}</p>
+            <p>For {{res['listing_type']}}</p>
+            <p>Price: from {{res['price_min ']}} to {{res['price_max ']}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

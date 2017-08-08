@@ -14,8 +14,9 @@ import { SelectedSityService } from '../service/selected-city-service';
 })
 export class SearchComponent implements OnInit, DoCheck {
   private cities: Cities[] = [];
-  city = null;
   foundCities: string[] = [];
+  city = null;
+
 
   constructor(private httpService: HttpService,
     private selectedSityService: SelectedSityService) { }
@@ -26,7 +27,6 @@ export class SearchComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck() {
-    this.foundCities = [];
     for (let i = 0; i < this.cities.length; i++) {
       if (this.city && this.city.length < 1) return this.foundCities = [];
       if (this.foundCities.length === 5) return;

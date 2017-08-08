@@ -1,4 +1,23 @@
+.jumbotron {
+  display: flex;
+  max-height: 600px;
+}
+
+.properties {
+  width: -webkit-fill-available;
+  flex-direction: column;
+  overflow: scroll;
+}
+
 .property {
   display: flex;
-  justify-content: space-between;
+  padding-left: 20px;
+  padding-bottom: 20px;
+}
+
+img {
+  display: block;
+  width: 200px;
+  height: 150px;
+  padding-right: 20px;
 }

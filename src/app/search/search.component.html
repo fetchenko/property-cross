@@ -7,13 +7,12 @@
 </div>
 
 <form class="form-search">
-  <label for="inputCity" class="sr-only">Enter location</label>
-  <input #city (keyup)="onKey(city.value)" id="inputCity" class="form-control" placeholder="Enter city">
-  <button class="btn btn-primary" type="submit">Go</button>
-  <button class="btn btn-primary" type="submit">My location</button>
+  <input #city (keyup)="onKey(city.value)" class="form-control" placeholder="Enter city">
+  <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+  <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-globe"></span></button>
 </form>
 
-
+<!--
 <div class="recent-searches">
   <div class="container">
     <div class="jumbotron">
@@ -28,7 +27,7 @@
     </div>
   </div>
 </div>
-
+-->
 
 
 

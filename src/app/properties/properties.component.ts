@@ -35,9 +35,6 @@ export class PropertiesComponent implements OnInit {
       if (this.selectedCity) this.options.place_name = this.selectedCity.text;
       console.log(this.options);
       });
-  }
-
-  searchProperty() {
     this.http.getJsonpData(this.options)
       .map((resp: any) => {
         return resp.json();
@@ -47,5 +44,7 @@ export class PropertiesComponent implements OnInit {
         console.log(this.result);
       });
   }
+
+  searchProperty() {  }
 
 }
