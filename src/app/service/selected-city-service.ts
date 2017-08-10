@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 @Injectable()
-export class SelectedSityService {
+export class SelectedCityService {
   private subject = new Subject<any>();
 
   sendSelectedCity(city: string) {

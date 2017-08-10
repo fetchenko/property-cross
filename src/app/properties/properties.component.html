@@ -1,17 +1,56 @@
-<div class="property">
+<app-filters></app-filters>
+<h1>{{options.place_name}}</h1>
+
+<div class="row col-lg-7 col-lg-offset-1">
   <div class="container">
-    <div class="jumbotron">
-      <app-filters></app-filters>
-      <div class="properties">
-        <div class="property" *ngFor="let res of result">
-          <img [src]="res['img_url']">
-          <div class="description">
+    <app-search></app-search>
+  </div>
+    <div class="panel-group">
+      <div class="panel panel-default" *ngFor="let res of result">
+        <img [src]="res['img_url']" class="img-rounded" width="274" height="206">
+        <div class="description col-lg-offset-1">
+            <p>{{res['title']}} <span (click)="addFaves(res)" class="glyphicon glyphicon-star"></span></p>
             <p>bathroom number : {{res['bathroom_number']}}</p>
             <p>For {{res['listing_type']}}</p>
-            <p>Price: from {{res['price_min ']}} to {{res['price_max ']}}</p>
-          </div>
+            <p>Price {{res['price_formatted']}}</p>
+            <p>Type {{res['property_type']}}</p>
         </div>
       </div>
     </div>
+</div>
+
+
+
+<!--
+<div class="property">
+  <div class="container">
+
+  <div class="row">
+
+      <app-filters></app-filters>
+      <div class="panel-group col-md-9 col-md-offset-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">Founded {{result.length}}</div>
+            <div class="panel-body">
+              <div class="property" *ngFor="let res of result">
+                <div class="col-md-5">
+                  <img [src]="res['img_url']" class="img-rounded" alt="Cinque Terre" width="304" height="236">
+                </div>
+                <div class="description col-md-9 col-sm-9 col-xs-9">
+                  <span id="title" class="col-md-10">{{res['title']}}</span>
+                  <button class="btn btn-primary">
+                    <span class="glyphicon glyphicon-star"></span>
+                  </button>
+                  <p>bathroom number : {{res['bathroom_number']}}</p>
+                  <p>For {{res['listing_type']}}</p>
+                  <p>Price {{res['price_formatted']}}</p>
+                  <p>Type {{res['property_type']}}</p>
+                </div>
+                </div>
+            </div>
+        </div>
+      </div>
+  </div>
   </div>
 </div>
+-->

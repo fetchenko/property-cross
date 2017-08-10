@@ -13,7 +13,9 @@ import { JsonpModule } from '@angular/http';
 import { HttpService } from './service/http.service';
 import { PropertiesComponent } from './properties/properties.component';
 
-import { SelectedSityService } from './service/selected-city-service';
+import { SelectedCityService } from './service/selected-city-service';
+import { FavouritesComponent } from './favourites/favourites.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { SelectedSityService } from './service/selected-city-service';
     SearchComponent,
     MenuComponent,
     FiltersComponent,
-    PropertiesComponent
+    PropertiesComponent,
+    FavouritesComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +34,7 @@ import { SelectedSityService } from './service/selected-city-service';
     HttpModule,
     JsonpModule
   ],
-  providers: [ HttpService, SelectedSityService ],
+  providers: [ HttpService, SelectedCityService ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

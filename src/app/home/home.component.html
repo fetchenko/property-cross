@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="panel panel-default col-md-10 col-xs-12 col-lg-8 col-md-offset-2">
+    <div class="panel-heading">
+      <div class="panel-title">Property Cross</div>
+    </div>
+    <div class="panel-body">
+      <p class="lead">Use the form below to search for houses to buy.
+        You can search by place-name, postcode, or click 'My location',
+        to search in your current location!</p>
+
+      <app-search (onAddSearchs)="addSearchs($event)"></app-search>
+
+
+      <div><p></p></div>
+
+      <div class="row">
+        <ul class="list-group">
+          <li class="list-group-item disabled">Latest search</li>
+            <li *ngFor="let search of searchs" class="list-group-item">{{search}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+

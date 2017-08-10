@@ -1,33 +1,51 @@
-<div class="jumbotron">
-  <div class="container">
-    <p>Use the form below to search for houses to buy.
-      You can search by place-name, postcode, or click 'My location',
-      to search in your current location!</p>
-  </div>
-</div>
+      <div class="row col-lg-5 col-md-5 col-xs-9 col-lg-offset-3 col-md-offset-3">
+          <div class="input-group">
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{country}}<span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a (click)="setCountry('England')">England</a></li>
+                  <li><a (click)="setCountry('Brasil')">Brasil</a></li>
+                  <li><a (click)="setCountry('Deutschland')">Deutschland</a></li>
+                  <li><a (click)="setCountry('España')">España</a></li>
+                  <li><a (click)="setCountry('France')">France</a></li>
+                  <li><a (click)="setCountry('India')">India</a></li>
+                  <li><a (click)="setCountry('Italia')">Italia</a></li>
+                  <li><a (click)="setCountry('Mexico')">Mexico</a></li>
+                </ul>
+              </div>
+              <input  class="form-control" [(ngModel)]="city"  (keyup)="onKey(city)" placeholder="Enter city">
+              <ul class="list-group">
+                <li class="list-group-item" *ngFor="let foundCity of foundCities"
+                    (click)="sendSelectedCity(foundCity.name); setCity(foundCity.name); addToSearchs(foundCity.name)"
+                    routerLink="/property">{{foundCity.name}}</li>
+              </ul>
+            </div>
+          </div>
 
-<form class="form-search">
-  <input #city (keyup)="onKey(city.value)" class="form-control" placeholder="Enter city">
-  <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-search"></span></button>
-  <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-globe"></span></button>
-</form>
+      <button class="btn btn-default"> <span class="glyphicon glyphicon-search"></span></button>
+      <button class="btn btn-default"><span class="glyphicon glyphicon-globe"></span></button>
+
+
+
+
+
 
 <!--
-<div class="recent-searches">
-  <div class="container">
-    <div class="jumbotron">
-      <div class="list-group">
-        <a href="#" class="list-group-item active">
-          Recent searches:
-        </a>
-        <div *ngFor="let foundCity of foundCities">
-          <a (click)="sendSelectedCity(foundCity)" class="list-group-item" >{{foundCity}}</a>
+      <div class="dropdown-search">
+        <div class="list-group">
+          <ul *ngFor="let foundCity of foundCities" class="form-control">
+            <a (click)="sendSelectedCity(foundCity.name); setCity(foundCity.name);" >{{foundCity.name}}</a>
+          </ul>
         </div>
       </div>
     </div>
-  </div>
-</div>
--->
+
+
+
+     -->
+
+
+
 
 
 

@@ -1,12 +1,12 @@
-<div class="filters">
+<div class="row col-lg-2 col-md-2 col-lg-offset-1">
+  <div class="input-group" aria-label="">
+    <input class="btn btn-primary" type="submit" value="To Rent">
+    <input class="btn btn-default" type="submit" value="To Sale">
+  </div>
+
   <div class="form-group">
-
-    <button type="button" class="btn btn-primary btn-sm">To Rent</button>
-    <button type="button" class="btn btn-default btn-sm">To Sale</button>
-
-
-    <label for="sort">Sort:</label>
-    <select class="form-control" id="sort">
+    <label for="sort-by">Sort</label>
+    <select class="form-control" id="sort-by">
       <option>Nestoria Rank</option>
       <option>Price(low to high)</option>
       <option>Price(high to low)</option>
@@ -17,37 +17,29 @@
     </select>
   </div>
 
-  <label for="select-beds">Beds:</label>
-  <div id="select-beds">
-    <button type="button" class="btn btn-default btn-sm">Studio</button>
-    <button type="button" class="btn btn-default btn-sm">1</button>
-    <button type="button" class="btn btn-default btn-sm">2</button>
-    <button type="button" class="btn btn-default btn-sm">3</button>
-    <button type="button" class="btn btn-default btn-sm">4+</button>
+  <label for="beds">Beds</label>
+  <div id="beds" class="input-group">
+    <input class="btn btn-default" type="submit" value="Studio">
+    <input class="btn btn-default" type="submit" value="1">
+    <input class="btn btn-default" type="submit" value="2">
+    <input class="btn btn-default" type="submit" value="3">
+    <input class="btn btn-default" type="submit" value="4+">
   </div>
 
-
-  <label for="input-price">Price:</label>
-  <div class="input-group" id="input-price">
-    <span class="input-group-addon">Min</span>
-    <input type="number" class="form-control">
-    <span class="input-group-addon">Max</span>
-    <input type="number" class="form-control">
+  <label for="propetry-type">Property type</label>
+  <div id="propetry-type" class="input-group">
+    <input class="btn btn-default" type="submit" value="All">
+    <input class="btn btn-default" type="submit" value="Flat">
+    <input class="btn btn-default" type="submit" value="House">
   </div>
 
-  <h3>Property type</h3>
-  <button type="button" class="btn btn-default btn-sm">All</button>
-  <button type="button" class="btn btn-default btn-sm">Flat</button>
-  <button type="button" class="btn btn-default btn-sm">House</button>
-
-
-  <h3>Bathrooms</h3>
-  <button type="button" class="btn btn-default btn-sm">1</button>
-  <button type="button" class="btn btn-default btn-sm">2</button>
-  <button type="button" class="btn btn-default btn-sm">3</button>
-  <button type="button" class="btn btn-default btn-sm">4+</button>
-
-
+  <label for="bathrooms">Bathrooms</label>
+  <div id="bathrooms" class="input-group">
+    <input class="btn btn-default" type="submit" value="1">
+    <input class="btn btn-default" type="submit" value="2">
+    <input class="btn btn-default" type="submit" value="3">
+    <input class="btn btn-default" type="submit" value="4+">
+  </div>
 
 </div>
 
