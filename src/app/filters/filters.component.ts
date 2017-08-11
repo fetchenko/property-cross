@@ -8,6 +8,8 @@ import { Filters } from '../filters';
 })
 export class FiltersComponent implements OnInit {
 
+  favourites: any[] = [];
+  favesNum = 100;
   options: Filters;
 
   constructor() { }

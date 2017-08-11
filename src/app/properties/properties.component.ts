@@ -1,10 +1,12 @@
 import {Component, DoCheck, OnInit} from '@angular/core';
-import { HttpService } from '../service/http.service';
+import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/map';
 
-import { Subscription } from 'rxjs/Subscription';
-import { SelectedCityService } from '../service/selected-city-service';
+import { HttpService } from '../service/http.service';
+import { SelectedLocationService } from '../service/selected-location-service';
+import { LocalStorageService } from 'angular-2-local-storage';
 
+import { Location } from '../service/lotacion';
 
 @Component({
   selector: 'app-properties',
@@ -13,11 +15,12 @@ import { SelectedCityService } from '../service/selected-city-service';
 })
 export class PropertiesComponent implements OnInit, DoCheck {
   result: string[];
+  favesNum = 100;
+  favourites: any[] = [];
 
+  selectedLocation: Location = null;
   selectedCity: any;
   subscription: Subscription;
-
-  faves: any[] = [];
 
   options: any = {
     action: 'search_listings',
@@ -33,21 +36,23 @@ export class PropertiesComponent implements OnInit, DoCheck {
   };
 
   constructor(private http: HttpService,
-              private SelectedCityService: SelectedCityService) {}
+              private SelectedLocationService: SelectedLocationService,
+              private localStorageService: LocalStorageService) {}
 
   ngOnInit() {
-    this.subscription = this.SelectedCityService.getSelectedCity()
-      .subscribe(selectedCity => { this.selectedCity = selectedCity;
-      console.log(this.selectedCity );
-      });
+    this.subscription = this.SelectedLocationService.getSelectedLocation()
+      .subscribe((selectedLocation) => this.selectedLocation = selectedLocation);
     this.http.getJsonpData(this.options)
       .map((resp: any) => {
         return resp.json();
       })
       .subscribe((resp: any) => {
         this.result = resp['response']['listings'];
-        console.log(this.result);
       });
+    for (let index = 0; index < this.favesNum; index++) {
+      let key = 'faves' + index.toString();
+      this.favourites.push(this.localStorageService.get(key));
+    }
   }
 
   ngDoCheck() {
@@ -68,8 +73,11 @@ export class PropertiesComponent implements OnInit, DoCheck {
   }
 
   addFaves(propertyResponse: any) {
-    this.faves.push(propertyResponse);
-    console.log(this.faves);
+    let key;
+    if (this.localStorageService.length() >= this.favesNum) {
+      return;
+    }
+    key = 'faves' + this.localStorageService.length().toString();
+    this.localStorageService.set(key, propertyResponse.toString());
   }
-
 }

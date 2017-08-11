@@ -1,3 +1,12 @@
-<p>
-  favourites works!
-</p>
+<div class="panel-group">
+  <div class="panel panel-default" *ngFor="let res of favourites">
+    <img [src]="res['img_url']" class="img-rounded" width="274" height="206">
+    <div class="description col-lg-offset-1">
+      <p>{{res['title']}} <span class="glyphicon glyphicon-star"></span></p>
+      <p>bathroom number : {{res['bathroom_number']}}</p>
+      <p>For {{res['listing_type']}}</p>
+      <p>Price {{res['price_formatted']}}</p>
+      <p>Type {{res['property_type']}}</p>
+    </div>
+  </div>
+</div>

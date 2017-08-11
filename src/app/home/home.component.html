@@ -10,13 +10,10 @@
 
       <app-search (onAddSearchs)="addSearchs($event)"></app-search>
 
-
-      <div><p></p></div>
-
       <div class="row">
         <ul class="list-group">
           <li class="list-group-item disabled">Latest search</li>
-            <li *ngFor="let search of searchs" class="list-group-item">{{search}}</li>
+            <li *ngFor="let search of latestSearches.reverse()" class="list-group-item">{{search}}</li>
         </ul>
       </div>
     </div>

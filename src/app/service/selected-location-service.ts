@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { Location } from './lotacion';
 
 @Injectable()
-export class SelectedCityService {
+export class SelectedLocationService {
   private subject = new Subject<any>();
 
-  sendSelectedCity(city: string) {
-    this.subject.next({ text: city });
+  sendSelectedLocation (location: Location) {
+    this.subject.next({ text: location });
   }
 
-  clearSelectedCity() {
+  clearSelectedLocation() {
     this.subject.next();
   }
 
-  getSelectedCity(): Observable<any> {
+  getSelectedLocation(): Observable<Location> {
     return this.subject.asObservable();
   }
 }

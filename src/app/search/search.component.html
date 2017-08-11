@@ -1,22 +1,20 @@
       <div class="row col-lg-5 col-md-5 col-xs-9 col-lg-offset-3 col-md-offset-3">
           <div class="input-group">
-            <div class="input-group-btn">
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{country}}<span class="caret"></span></button>
+           <div class="input-group-btn">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">{{selectedLocation.country_name}}<span class="caret"></span></button>
                 <ul class="dropdown-menu">
-                  <li><a (click)="setCountry('England')">England</a></li>
-                  <li><a (click)="setCountry('Brasil')">Brasil</a></li>
-                  <li><a (click)="setCountry('Deutschland')">Deutschland</a></li>
-                  <li><a (click)="setCountry('España')">España</a></li>
-                  <li><a (click)="setCountry('France')">France</a></li>
-                  <li><a (click)="setCountry('India')">India</a></li>
-                  <li><a (click)="setCountry('Italia')">Italia</a></li>
-                  <li><a (click)="setCountry('Mexico')">Mexico</a></li>
+                  <li *ngFor="let country of countries">
+                    <a (click)="setCountry(country)">{{country.country_name}}</a>
+                  </li>
                 </ul>
               </div>
+
               <input  class="form-control" [(ngModel)]="city"  (keyup)="onKey(city)" placeholder="Enter city">
               <ul class="list-group">
                 <li class="list-group-item" *ngFor="let foundCity of foundCities"
-                    (click)="sendSelectedCity(foundCity.name); setCity(foundCity.name); addToSearchs(foundCity.name)"
+                    (click)="setSelectedCity(foundCity.name); addToSearchs(foundCity.name);
+                    sendSelectedLocation();"
                     routerLink="/property">{{foundCity.name}}</li>
               </ul>
             </div>
@@ -24,25 +22,6 @@
 
       <button class="btn btn-default"> <span class="glyphicon glyphicon-search"></span></button>
       <button class="btn btn-default"><span class="glyphicon glyphicon-globe"></span></button>
-
-
-
-
-
-
-<!--
-      <div class="dropdown-search">
-        <div class="list-group">
-          <ul *ngFor="let foundCity of foundCities" class="form-control">
-            <a (click)="sendSelectedCity(foundCity.name); setCity(foundCity.name);" >{{foundCity.name}}</a>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-
-
-     -->
 
 
 
