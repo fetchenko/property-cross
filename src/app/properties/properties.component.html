@@ -1,19 +1,24 @@
 <app-filters></app-filters>
 
 <div class="row col-lg-7 col-lg-offset-1">
-  <div class="container">
     <app-search></app-search>
-  </div>
+
+  <p></p>
     <div class="panel-group">
       <div class="panel panel-default" *ngFor="let res of result">
-        <img [src]="res['img_url']" class="img-rounded" width="274" height="206">
-        <div class="description col-lg-offset-1">
-            <p>{{res['title']}} <span (click)="addFaves(res)" class="glyphicon glyphicon-star"></span></p>
+          <a class="thumbnail col-lg-4">
+            <img [src]="res['img_url']" class="img-rounded">
+          </a>
+          <div class="description col-lg-6 col-lg-offset-1">
+            <p>{{res['title']}}</p>
             <p>bathroom number : {{res['bathroom_number']}}</p>
             <p>For {{res['listing_type']}}</p>
             <p>Price {{res['price_formatted']}}</p>
             <p>Type {{res['property_type']}}</p>
-        </div>
+         </div>
+        <button class="btn btn-default col-lg-1" (click)="addFaves(res)">
+          <span class="glyphicon glyphicon-star"></span>
+        </button>
       </div>
     </div>
 </div>

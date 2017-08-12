@@ -15,6 +15,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
   styleUrls: ['./search.component.css'],
   providers: [HttpService]
 })
+
 export class SearchComponent implements OnInit, DoCheck {
   public countries: Location[] = locations;
   private cities: Cities[] = [];
@@ -24,7 +25,6 @@ export class SearchComponent implements OnInit, DoCheck {
   city = null;
   latestSearches: any[] = [];
   numSearches = 6;
-
 
   @Output() onAddSearchs = new EventEmitter<string>();
     addToSearchs(searchs) {
@@ -71,7 +71,6 @@ export class SearchComponent implements OnInit, DoCheck {
     this.city = city + ' ';
     this.foundCities = [];
     this.addSearchList();
-
   }
 
   addSearchList () {
@@ -88,5 +87,4 @@ export class SearchComponent implements OnInit, DoCheck {
   setCountry(country: Location) {
     this.selectedLocation = country;
   }
-
 }

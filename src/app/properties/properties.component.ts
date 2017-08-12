@@ -18,7 +18,7 @@ export class PropertiesComponent implements OnInit, DoCheck {
   favesNum = 100;
   favourites: any[] = [];
 
-  selectedLocation: Location = null;
+  selectedLocation: Location;
   selectedCity: any;
   subscription: Subscription;
 
@@ -36,11 +36,11 @@ export class PropertiesComponent implements OnInit, DoCheck {
   };
 
   constructor(private http: HttpService,
-              private SelectedLocationService: SelectedLocationService,
+              private selectedLocationService: SelectedLocationService,
               private localStorageService: LocalStorageService) {}
 
   ngOnInit() {
-    this.subscription = this.SelectedLocationService.getSelectedLocation()
+    this.subscription = this.selectedLocationService.getSelectedLocation()
       .subscribe((selectedLocation) => this.selectedLocation = selectedLocation);
     this.http.getJsonpData(this.options)
       .map((resp: any) => {
@@ -78,6 +78,6 @@ export class PropertiesComponent implements OnInit, DoCheck {
       return;
     }
     key = 'faves' + this.localStorageService.length().toString();
-    this.localStorageService.set(key, propertyResponse.toString());
+    this.localStorageService.set(key, JSON.stringify(propertyResponse['response']['listings']));
   }
 }

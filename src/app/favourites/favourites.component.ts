@@ -13,11 +13,13 @@ export class FavouritesComponent implements OnInit {
   constructor  (private localStorageService: LocalStorageService) { }
 
   ngOnInit() {
+    let favourite;
     for (let index = 0; index < this.favesNum; index++) {
-      let key = 'city' + index.toString();
-      if (this.localStorageService.get(key) !== null)
-        this.favourites.push(this.localStorageService.get(key));
-      console.log(this.favourites);
+      let key = 'faves' + index.toString();
+      if (this.localStorageService.get(key) !== null) {
+        favourite = this.localStorageService.get(key);
+        this.favourites.push(favourite);
+      }
     }
   }
 
