@@ -8,18 +8,18 @@ import { LocalStorageService } from 'angular-2-local-storage';
 })
 export class FavouritesComponent implements OnInit {
 
+  favourite: any;
   favourites: any[] = [];
   favesNum = 100
   constructor  (private localStorageService: LocalStorageService) { }
 
   ngOnInit() {
-    let favourite;
-    for (let index = 0; index < this.favesNum; index++) {
-      let key = 'faves' + index.toString();
-      if (this.localStorageService.get(key) !== null) {
-        favourite = this.localStorageService.get(key);
-        this.favourites.push(favourite);
-      }
+    /* faves from LS */
+    for (let index = 0; index < this.localStorageService.length(); index++) {
+      let key = 'favourite' + index.toString();
+      this.favourite = this.localStorageService.get(key);
+      if (this.favourite)
+        this.favourites.push(JSON.parse(this.favourite));
     }
   }
 

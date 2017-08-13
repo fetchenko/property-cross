@@ -1,28 +1,35 @@
-      <div class="row col-lg-5 col-md-5 col-xs-9 col-lg-offset-3 col-md-offset-3">
-          <div class="input-group">
-           <div class="input-group-btn">
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
-                      aria-haspopup="true" aria-expanded="false">{{selectedLocation.country_name}}<span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                  <li *ngFor="let country of countries">
-                    <a (click)="setCountry(country)">{{country.country_name}}</a>
-                  </li>
-                </ul>
-              </div>
+<div class="container col-lg-12">
+  <div class="row col-lg-8 col-lg-offset-1">
+    <div class="input-group">
+      <div class="input-group-btn">
+        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">{{selectedLocation.country_name}}<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li *ngFor="let country of countries">
+            <a (click)="setCountry(country)">{{country.country_name}}</a>
+          </li>
+        </ul>
+      </div>
 
-              <input  class="form-control" [(ngModel)]="city"  (keyup)="onKey(city)" placeholder="Enter city">
-              <ul class="list-group">
-                <li class="list-group-item" *ngFor="let foundCity of foundCities"
-                    (click)="setSelectedCity(foundCity.name); addToSearchs(foundCity.name);
-                    sendSelectedLocation();"
-                    routerLink="/property">{{foundCity.name}}</li>
-              </ul>
-            </div>
-          </div>
+      <input  class="form-control" [(ngModel)]="city"  (keyup)="onKey(city)" placeholder="Enter city">
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let foundCity of foundCities">
+          <a (click)="setSelectedCity(foundCity.name); sendSelectedLocation();" routerLink="/property">{{foundCity.name}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
 
-      <button class="btn btn-default"> <span class="glyphicon glyphicon-search"></span></button>
-      <button class="btn btn-default"><span class="glyphicon glyphicon-globe"></span></button>
 
+<button class="btn btn-default" (click)="sendSelectedLocation(); setSelectedCity(city);" routerLink="/property">
+  <span class="glyphicon glyphicon-search"></span>
+</button>
+<button class="btn btn-default">
+  <span class="glyphicon glyphicon-globe"></span>
+</button>
+
+</div>
 
 
 

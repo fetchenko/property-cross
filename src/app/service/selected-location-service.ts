@@ -7,7 +7,7 @@ import { Location } from './lotacion';
 export class SelectedLocationService {
   private subject = new Subject<any>();
 
-  sendSelectedLocation (location: Location) {
+  sendSelectedLocation (location: any) {
     this.subject.next({ text: location });
   }
 
@@ -15,7 +15,7 @@ export class SelectedLocationService {
     this.subject.next();
   }
 
-  getSelectedLocation(): Observable<Location> {
+  getSelectedLocation(): Observable<any> {
     return this.subject.asObservable();
   }
 }

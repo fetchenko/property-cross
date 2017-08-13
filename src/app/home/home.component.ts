@@ -7,23 +7,22 @@ import { LocalStorageService } from 'angular-2-local-storage';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  searchedCities: string[] = [];
-  latestSearches: any[] = [];
-  numSearches = 6;
+
+  latestSearches: Location[] = [];
+  location: any;
 
   constructor (private localStorageService: LocalStorageService) {
   }
 
+
   ngOnInit() {
-    for (let index = 0; index < this.numSearches; index++) {
-      let key = 'city' + index.toString();
-      if (this.localStorageService.get(key) !== null)
-        this.latestSearches.push(this.localStorageService.get(key));
+    /* location from LS */
+    for (let index = 0; index < this.localStorageService.length(); index++) {
+      let key = 'location' + index.toString();
+      this.location = this.localStorageService.get(key);
+      if (this.location)
+        this.latestSearches.push(JSON.parse(this.location));
     }
+    this.latestSearches = this.latestSearches.splice(this.latestSearches.length - 6, this.latestSearches.length);
   }
-
-  addSearchs(searchs) {
-    this.searchedCities.push(searchs);
-  }
-
 }

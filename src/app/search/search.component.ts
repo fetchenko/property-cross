@@ -23,25 +23,24 @@ export class SearchComponent implements OnInit, DoCheck {
   public foundCities: Cities[] = [];
   selectedLocation: Location = this.countries[0];
   city = null;
-  latestSearches: any[] = [];
-  numSearches = 6;
-
-  @Output() onAddSearchs = new EventEmitter<string>();
-    addToSearchs(searchs) {
-      this.onAddSearchs.emit(searchs);
-    }
+  latestSearches: Location[] = [];
+  location: any;
 
   constructor(private httpService: HttpService,
     private selectedLocationService: SelectedLocationService,
     private localStorageService: LocalStorageService) {  }
 
   ngOnInit() {
+      /* cities from json file */
     this.httpService.getData()
       .subscribe((data: Response) => this.cities = data.json());
-    for (let index = 0; index < this.numSearches; index++) {
-      let key = 'city' + index.toString();
-      this.latestSearches.push(this.localStorageService.get(key));
+    /* latest location from LS */
+    for (let index = 0; index < this.localStorageService.length(); index++) {
+      let key = 'location' + index.toString();
+      this.location = this.localStorageService.get(key);
+      this.latestSearches.push(JSON.parse(this.location));
     }
+    this.latestSearches = this.latestSearches.splice(this.latestSearches.length - 6, this.latestSearches.length);
   }
 
   ngDoCheck() {
@@ -58,8 +57,9 @@ export class SearchComponent implements OnInit, DoCheck {
     this.foundCities = this.foundCities.splice(0, 6);
   }
 
+  /* location to property */
   sendSelectedLocation() {
-      this.selectedLocationService.sendSelectedLocation(this.selectedLocation);
+      this.selectedLocationService.sendSelectedLocation(JSON.stringify(this.selectedLocation));
   }
 
   onKey(city: string) {
@@ -70,18 +70,14 @@ export class SearchComponent implements OnInit, DoCheck {
     this.selectedLocation.city_name = city;
     this.city = city + ' ';
     this.foundCities = [];
-    this.addSearchList();
+    this.saveSearchedCity();
   }
 
-  addSearchList () {
+  /* save location to LS */
+  saveSearchedCity () {
     let key = '';
-    if (this.localStorageService.length() >= this.numSearches) {
-      key = 'city' + (this.numSearches - 1);
-      this.localStorageService.set(key, this.selectedLocation.city_name);
-    } else {
-      key = 'city' + this.localStorageService.length().toString();
-      this.localStorageService.set(key, this.selectedLocation.city_name);
-    }
+    key = 'location' + this.localStorageService.length().toString();
+    this.localStorageService.set(key, JSON.stringify(this.selectedLocation));
   }
 
   setCountry(country: Location) {
