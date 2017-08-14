@@ -1,46 +1,45 @@
 <div class="row col-lg-2 col-lg-offset-1 col-xs-12">
-  <div class="input-group col-lg-12 col-xs-12" aria-label="">
-    <input  class="btn btn-primary col-lg-6 col-xs-6" type="submit" value="To Rent">
-    <input class="btn btn-default col-lg-6 col-xs-6" type="submit" value="To Sale">
+  <div class="input-group col-lg-12 col-xs-12"  >
+    <div *ngFor="let listing_type of filterValues.listing_type">
+      <input class="btn btn-default col-lg-6 col-xs-6" type="submit" value="For {{listing_type}}"
+            (click)="setListing(listing_type)">
+    </div>
   </div>
 
+  <div class="form-group">
+    <label for="sort-by">Sort</label>
+    <select class="form-control" id="sort-by" (click)="setSort()" >
+        <option *ngFor="let sort of filterValues.sort">{{sort}}</option>
+    </select>
+  </div>
 
-    <div class="form-group">
-      <label for="sort-by">Sort</label>
-      <select class="form-control" id="sort-by">
-        <option>Nestoria Rank</option>
-        <option>Price(low to high)</option>
-        <option>Price(high to low)</option>
-        <option>Beds(fewer first)</option>
-        <option>Beds(more first)</option>
-        <option>Date(older first)</option>
-        <option>Date(newer first)</option>
-      </select>
+  <label for="beds">Beds</label>
+  <div id="beds" class="input-group col-lg-12 col-xs-12">
+    <input class="btn btn-default col-lg-4 col-xs-4" type="submit" value="Studio"
+            (click)="setBeds(0)">
+    <div *ngFor="let bed of filterValues.beds">
+      <input class="btn btn-default col-lg-2 col-xs-2"  type="submit" value="{{bed}}"
+            (click)="setBeds(bed)">
     </div>
+  </div>
 
-    <label for="beds">Beds</label>
-    <div id="beds" class="input-group col-lg-12 col-xs-12">
-      <input class="btn btn-default col-lg-4 col-xs-4" type="submit" value="Studio">
-      <input class="btn btn-default col-lg-2 col-xs-2" type="submit" value="1">
-      <input class="btn btn-default col-lg-2 col-xs-2" type="submit" value="2">
-      <input class="btn btn-default col-lg-2 col-xs-2" type="submit" value="3">
-      <input class="btn btn-default col-lg-2 col-xs-2" type="submit" value="4+">
-    </div>
+  <label for="propetry-type">Property type</label>
+  <div id="propetry-type" class="input-group col-lg-12 col-xs-12">
+    <input class="btn btn-default col-lg-12 col-xs-12" type="submit" value="All"
+          (click)="setProperty('All')">
+    <input class="btn btn-default col-lg-6 col-xs-6" type="submit" value="Flat"
+           (click)="setProperty('Flat')">
+    <input class="btn btn-default col-lg-6 col-xs-6" type="submit" value="House"
+           (click)="setProperty('House')">
+  </div>
 
-    <label for="propetry-type">Property type</label>
-    <div id="propetry-type" class="input-group col-lg-12 col-xs-12">
-      <input class="btn btn-default col-lg-12 col-xs-12" type="submit" value="All">
-      <input class="btn btn-default col-lg-6 col-xs-6" type="submit" value="Flat">
-      <input class="btn btn-default col-lg-6 col-xs-6" type="submit" value="House">
+  <label for="bathrooms">Bathrooms</label>
+  <div id="bathrooms" class="input-group col-lg-12 col-xs-12">
+    <div *ngFor="let bath of filterValues.bathrooms">
+      <input class="btn btn-default col-lg-3 col-xs-3" type="submit" value="{{bath}}"
+             (click)="setBaths(bath)">
     </div>
-
-    <label for="bathrooms">Bathrooms</label>
-    <div id="bathrooms" class="input-group col-lg-12 col-xs-12">
-      <input class="btn btn-default col-lg-3 col-xs-3" type="submit" value="1">
-      <input class="btn btn-default col-lg-3 col-xs-3" type="submit" value="2">
-      <input class="btn btn-default col-lg-3 col-xs-3" type="submit" value="3">
-      <input class="btn btn-default col-lg-3 col-xs-3" type="submit" value="4+">
-    </div>
+  </div>
 </div>
 
 

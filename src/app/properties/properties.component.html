@@ -1,10 +1,10 @@
-<app-filters></app-filters>
+<app-filters (onAddFilter)="onAddFilter($event)"></app-filters>
 
 <div class="row col-lg-7 col-lg-offset-1">
-    <app-search></app-search>
+  <app-search></app-search>
 
-  <p></p>
-    <div class="panel-group">
+  <label for="panel">Founded {{resultNum}}</label>
+    <div class="panel-group" id="panel">
       <div class="panel panel-default" *ngFor="let res of result">
           <a class="thumbnail col-lg-4">
             <img [src]="res['img_url']" class="img-rounded">
@@ -16,9 +16,11 @@
             <p>Price {{res['price_formatted']}}</p>
             <p>Type {{res['property_type']}}</p>
          </div>
-        <button class="btn btn-default col-lg-1" (click)="saveFavourite(res)">
-          <span class="glyphicon glyphicon-star"></span>
-        </button>
+        <div class="btn-favourite col-lg-1">
+          <button class="btn btn-default" (click)="saveFavourite(res)">
+            <span class="glyphicon glyphicon-star"></span>
+          </button>
+        </div>
       </div>
     </div>
 </div>

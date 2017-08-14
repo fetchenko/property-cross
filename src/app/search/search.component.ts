@@ -59,7 +59,8 @@ export class SearchComponent implements OnInit, DoCheck {
 
   /* location to property */
   sendSelectedLocation() {
-      this.selectedLocationService.sendSelectedLocation(JSON.stringify(this.selectedLocation));
+    this.localStorageService.set('selectedLocation', JSON.stringify(this.selectedLocation));
+    this.selectedLocationService.sendSelectedLocation(this.selectedLocation);
   }
 
   onKey(city: string) {
@@ -68,7 +69,7 @@ export class SearchComponent implements OnInit, DoCheck {
 
   setSelectedCity(city: string) {
     this.selectedLocation.city_name = city;
-    this.city = city + ' ';
+    this.city = city + '  ';
     this.foundCities = [];
     this.saveSearchedCity();
   }

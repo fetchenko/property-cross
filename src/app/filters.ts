@@ -1,9 +1,9 @@
-export interface Filters {
-  rent: string;
-  rank: string;
+export class Filters {
+  listing_type: string;
+  sort: string;
   beds: number[];
+  propertyType: string;
   priceMin: number;
   priceMax: number;
-  propertyType: string;
   bathrooms: number[];
 }

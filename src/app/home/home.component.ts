@@ -14,7 +14,6 @@ export class HomeComponent implements OnInit {
   constructor (private localStorageService: LocalStorageService) {
   }
 
-
   ngOnInit() {
     /* location from LS */
     for (let index = 0; index < this.localStorageService.length(); index++) {
@@ -24,5 +23,9 @@ export class HomeComponent implements OnInit {
         this.latestSearches.push(JSON.parse(this.location));
     }
     this.latestSearches = this.latestSearches.splice(this.latestSearches.length - 6, this.latestSearches.length);
+  }
+
+  saveSelectedLocation(location: Location) {
+    this.localStorageService.set('selectedLocation', JSON.stringify(location));
   }
 }

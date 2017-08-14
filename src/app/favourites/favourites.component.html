@@ -1,12 +1,19 @@
-<div class="panel-group">
-  <div class="panel panel-default" *ngFor="let favourite of favourites">
-    <img [src]="favourite['img_url']" class="img-rounded" width="274" height="206">
-    <div class="description col-lg-offset-1">
-      <p>{{favourite['title']}} <span class="glyphicon glyphicon-star"></span></p>
-      <p>bathroom number : {{favourite['bathroom_number']}}</p>
-      <p>For {{favourite['listing_type']}}</p>
-      <p>Price {{favourite['price_formatted']}}</p>
-      <p>Type {{favourite['property_type']}}</p>
+<div class="row col-lg-8 col-lg-offset-2">
+  <div class="panel-group">
+    <div class="panel panel-default" *ngFor="let favourite of favourites">
+      <img class="img-rounded col-lg-4" [src]="favourite['img_url']">
+      <div class="description col-lg-6">
+        <p>{{favourite['title']}}</p>
+        <p>bathroom number : {{favourite['bathroom_number']}}</p>
+        <p>For {{favourite['listing_type']}}</p>
+        <p>Price {{favourite['price_formatted']}}</p>
+        <p>Type {{favourite['property_type']}}</p>
+      </div>
+      <div class="btn-favourite col-lg-1 col-lg-offset-1">
+        <button class="btn btn-default">
+          <span class="glyphicon glyphicon-star"></span>
+        </button>
+      </div>
     </div>
   </div>
 </div>

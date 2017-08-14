@@ -1,4 +1,4 @@
-import {Component, DoCheck, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/map';
 
@@ -9,21 +9,29 @@ import { LocalStorageService } from 'angular-2-local-storage';
 import { Location } from '../service/lotacion';
 
 import { servers } from '../app-const-servers';
+import { Servers } from '../servers';
+import {Filters} from '../filters';
 
 @Component({
   selector: 'app-properties',
   templateUrl: './properties.component.html',
   styleUrls: ['./properties.component.css']
 })
-export class PropertiesComponent implements OnInit, DoCheck {
+export class PropertiesComponent implements OnInit {
   servers = servers;
+  currentServer: Servers[] = [];
   result: string[];
+  resultNum: number;
+
   favesNum = 100;
   favourites: any[] = [];
   favourite: any;
 
+  location: any;
   selectedLocation: Location;
   subscription: Subscription;
+
+  filter: Filters;
 
   options: any = {
     action: 'search_listings',
@@ -31,8 +39,8 @@ export class PropertiesComponent implements OnInit, DoCheck {
     encoding: 'json',
     page: 1,
     number_of_results: 15,
-    place_name: 'London',
-    property_type: 'flat',
+    place_name: '',
+    property_type: '',
     bathroom_min: 0,
     bathroom_max: 4
   };
@@ -42,18 +50,20 @@ export class PropertiesComponent implements OnInit, DoCheck {
               private localStorageService: LocalStorageService) {}
 
   ngOnInit() {
+    /* location from search, home */
+    this.location = this.localStorageService.get('selectedLocation');
+    this.selectedLocation = JSON.parse(this.location);
+    if (this.selectedLocation) {
+      this.options.place_name = this.selectedLocation.city_name;
+      this.searchProperties();
+    }
     /* location from search */
     this.subscription = this.selectedLocationService.getSelectedLocation()
-      .subscribe((selectedLocation) => {
-        this.selectedLocation = selectedLocation;
-      });
-    /* require property */
-    this.http.getJsonpData(this.options)
-      .map((resp: any) => {
-        return resp.json();
-      })
-      .subscribe((resp: any) => {
-        this.result = resp['response']['listings'];
+      .subscribe(location => {
+        this.location = location;
+        this.selectedLocation = this.location.text;
+        this.options.place_name = this.selectedLocation.city_name;
+        this.searchProperties();
       });
     /* faves from LS */
     for (let index = 0; index < this.localStorageService.length(); index++) {
@@ -63,20 +73,15 @@ export class PropertiesComponent implements OnInit, DoCheck {
     }
   }
 
-  ngDoCheck() {
-  /*  console.log(this.result);
-   if (this.selectedLocation && (this.options.place_name !== this.selectedLocation.country_name)) {
-      this.options.place_name = this.selectedLocation.city_name;
-    }*/
-  }
-
   searchProperties() {
-    this.http.getJsonpData(this.options)
+    this.identifyUrl(this.selectedLocation);
+    this.http.getJsonpData(this.currentServer[0].url, this.options)
       .map((resp: any) => {
         return resp.json();
       })
       .subscribe((resp: any) => {
-        this.result = resp['response']['listings'];
+      this.result = resp['response']['listings'];
+      this.resultNum = resp['response']['total_results'];
       });
   }
 
@@ -85,5 +90,16 @@ export class PropertiesComponent implements OnInit, DoCheck {
     let key;
     key = 'favourite' + this.localStorageService.length().toString();
     this.localStorageService.set(key, JSON.stringify(propertyResponse));
+  }
+
+  identifyUrl(location: Location) {
+    this.currentServer = this.servers.filter(function (server) {
+      return server.country_code.toLowerCase() === location.country_code.toLowerCase();
+    });
+  }
+
+  onAddFilter(filter) {
+    this.filter = filter;
+    console.log(this.filter);
   }
 }
