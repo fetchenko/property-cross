@@ -18,12 +18,15 @@ import {Filters} from '../filters';
   styleUrls: ['./properties.component.css']
 })
 export class PropertiesComponent implements OnInit {
+  sortList = ['Relevancy', 'bedroom_lowhigh', 'bedroom_highlow', 'price_lowhigh', 'price_highlow',  'newest', 'oldest'];
+  selectedBeds: number[] = [];
+  selectedBaths: number[] = [];
+
   servers = servers;
   currentServer: Servers[] = [];
   result: string[];
   resultNum: number;
 
-  favesNum = 100;
   favourites: any[] = [];
   favourite: any;
 
@@ -39,10 +42,18 @@ export class PropertiesComponent implements OnInit {
     encoding: 'json',
     page: 1,
     number_of_results: 15,
-    place_name: '',
-    property_type: '',
+    language: 'en',
+    place_name: null,
+    centre_point: '51.684183,-3.431481',
+    sort: 'relevancy',
+    listing_type: 'rent',
+    price_min: 0,
+    price_max: 999999999,
+    bedroom_min: 2,
+    bedroom_max: 2,
     bathroom_min: 0,
-    bathroom_max: 4
+    bathroom_max: 4,
+    has_photo: 1
   };
 
   constructor(private http: HttpService,
@@ -53,6 +64,7 @@ export class PropertiesComponent implements OnInit {
     /* location from search, home */
     this.location = this.localStorageService.get('selectedLocation');
     this.selectedLocation = JSON.parse(this.location);
+  //  console.log(this.selectedLocation);
     if (this.selectedLocation) {
       this.options.place_name = this.selectedLocation.city_name;
       this.searchProperties();
@@ -98,8 +110,40 @@ export class PropertiesComponent implements OnInit {
     });
   }
 
-  onAddFilter(filter) {
-    this.filter = filter;
-    console.log(this.filter);
+  onAddFilter(form) {
+    this.setOptions(form);
+    this.searchProperties();
+  }
+
+  setOptions(form) {
+    console.log(form.beds);
+    this.options.listing_type = form.listing_type;
+    this.options.sort = this.sortList[form.sortIndex];
+
+    if (form.property_type.includes('All') || form.property_type === '') {
+      this.options.property_type = '';
+    } else {
+      this.options.property_type = form.property_type;
+    }
+
+    this.selectedBeds = [];
+    for (let index = 0; index < form.beds.length; index++) {
+      if (form.beds[index])
+        this.selectedBeds.push(index);
+    }
+    this.options.bedroom_min = this.selectedBeds[0];
+    this.options.bedroom_max = this.selectedBeds[this.selectedBeds.length - 1];
+
+    this.selectedBaths = [];
+    for (let index = 0; index < form.bathrooms.length; index++) {
+      if (form.bathrooms[index])
+        this.selectedBaths.push(index + 1);
+    }
+    this.options.bathroom_min = this.selectedBaths[0];
+    this.options.bathroom_max = this.selectedBaths[this.selectedBaths.length - 1];
+
+    this.options.price_min = form.price[0];
+    this.options.price_max = form.price[1];
+    console.log(this.options);
   }
 }

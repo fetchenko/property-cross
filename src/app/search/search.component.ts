@@ -26,6 +26,8 @@ export class SearchComponent implements OnInit, DoCheck {
   latestSearches: Location[] = [];
   location: any;
 
+  myLocation: any;
+
   constructor(private httpService: HttpService,
     private selectedLocationService: SelectedLocationService,
     private localStorageService: LocalStorageService) {  }
@@ -41,6 +43,7 @@ export class SearchComponent implements OnInit, DoCheck {
       this.latestSearches.push(JSON.parse(this.location));
     }
     this.latestSearches = this.latestSearches.splice(this.latestSearches.length - 6, this.latestSearches.length);
+    this.selectedLocation = this.latestSearches[5];
   }
 
   ngDoCheck() {
@@ -71,11 +74,11 @@ export class SearchComponent implements OnInit, DoCheck {
     this.selectedLocation.city_name = city;
     this.city = city + '  ';
     this.foundCities = [];
-    this.saveSearchedCity();
+    this.saveSearchedLocation();
   }
 
   /* save location to LS */
-  saveSearchedCity () {
+  saveSearchedLocation () {
     let key = '';
     key = 'location' + this.localStorageService.length().toString();
     this.localStorageService.set(key, JSON.stringify(this.selectedLocation));
@@ -84,4 +87,17 @@ export class SearchComponent implements OnInit, DoCheck {
   setCountry(country: Location) {
     this.selectedLocation = country;
   }
+
+ /* setPosition(position) {
+    this.myLocation = position.coords;
+    this.selectedLocation.lat = this.myLocation.latitude;
+    this.selectedLocation.lng = this.myLocation.longitude;
+    console.log(this.selectedLocation);
+  }*/
+
+ /* searchGeoLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
+    }
+  }*/
 }

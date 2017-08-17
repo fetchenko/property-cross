@@ -1,6 +1,6 @@
-import {Component, Output, EventEmitter} from '@angular/core';
-import { Filters } from '../filters';
-import { filterValues } from '../app-const-filter-values';
+import {Component, Inject, Output, EventEmitter, AfterViewInit} from '@angular/core';
+import {FormArray, FormBuilder, FormControl, FormControlName, FormGroup, Validators} from '@angular/forms';
+import {SliderModule} from 'primeng/primeng';
 
 @Component({
   selector: 'app-filters',
@@ -8,39 +8,34 @@ import { filterValues } from '../app-const-filter-values';
   styleUrls: ['./filters.component.css']
 })
 export class FiltersComponent {
-  filters: Filters = {listing_type: 'buy', sort: 'relevancy', bathrooms: [], beds: [], priceMax: 0, propertyType: '', priceMin: 99999999};
-  filterValues = filterValues;
+  sortList = ['Relevancy', 'Bedroom (low to high)', 'Bedroom (high to low)', 'Price (low to high)', 'Price (high to low)', 'Newest', 'Oldest'];
+  form: FormGroup;
 
-  @Output() onAddFilter = new EventEmitter<Filters>();
-  addFilter(filter) {
-    this.onAddFilter.emit(filter);
+  @Output() onAddFilter = new EventEmitter<FormGroup>();
+  addFilter(form) {
+    this.onAddFilter.emit(form);
   }
 
-  setListing(listing: string) {
-    this.filters.listing_type = listing;
-    this.addFilter(this.filters);
-  }
-
-  setSort(sort: string) {
-    this.filters.sort = sort;
-    this.addFilter(this.filters);
-  }
-
-  setBeds(bedNum: number) {
-    this.filters.beds.push(bedNum);
-    this.addFilter(this.filters);
-  }
-
-  setProperty(type: string) {
-    this.filters.propertyType = type;
-    this.addFilter(this.filters);
-  }
-
-  setBaths(bathNum: number) {
-    this.filters.bathrooms.push(bathNum);
-    this.addFilter(this.filters);
-  }
-
+  constructor(@Inject(FormBuilder) fb: FormBuilder) {
+    this.form = fb.group({
+      listing_type: 'buy',
+      sortIndex: 0,
+      price: 0,
+      property_type: '',
+      beds: new FormArray([
+        new FormControl(false),
+        new FormControl(false),
+        new FormControl(false),
+        new FormControl(false),
+        new FormControl(false)
+      ]),
+      bathrooms: new FormArray([
+        new FormControl(false),
+        new FormControl(false),
+        new FormControl(false),
+        new FormControl(false)
+      ])
+    });
+    this.form.valueChanges.subscribe(data => this.addFilter(this.form.value));
+ }
 }
-
-

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { JsonpModule } from '@angular/http';
 
@@ -18,6 +18,10 @@ import { HttpService } from './service/http.service';
 import { SelectedLocationService } from './service/selected-location-service';
 import { LocalStorageModule } from 'angular-2-local-storage';
 
+import { SliderModule } from 'primeng/primeng';
+import { CheckboxModule } from 'primeng/primeng';
+import { RadioButtonModule } from 'primeng/primeng';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,14 +30,18 @@ import { LocalStorageModule } from 'angular-2-local-storage';
     FiltersComponent,
     PropertiesComponent,
     FavouritesComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     JsonpModule,
+    SliderModule,
+    CheckboxModule,
+    RadioButtonModule,
     LocalStorageModule.withConfig({
       prefix: 'app-root',
       storageType: 'localStorage'
