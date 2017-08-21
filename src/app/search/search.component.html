@@ -7,12 +7,12 @@
         </button>
         <ul class="dropdown-menu col-xs-12">
           <li *ngFor="let country of countries">
-            <a (click)="setCountry(country)">{{country.country_name}}</a>
+            <a (click)="setCountry(country)">{{country.country_name | translate}}</a>
           </li>
         </ul>
       </div>
 
-      <input class="form-control" [(ngModel)]="city" (keyup)="onKey(city)" placeholder="Enter city">
+      <input class="form-control" [(ngModel)]="city" (keyup)="onKey(city)" placeholder="{{'Enter city' | translate}}">
       <ul class="list-group">
         <li class="list-group-item" *ngFor="let foundCity of foundCities">
           <a (click)="setSelectedCity(foundCity.name); sendSelectedLocation();" routerLink="/property">{{foundCity.name}}</a>

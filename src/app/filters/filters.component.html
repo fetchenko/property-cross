@@ -3,21 +3,21 @@
 
   <label class="btn btn-default col-lg-6 col-xs-6">
     <p-radioButton name="listing_types" value="buy" formControlName="listing_type">
-    </p-radioButton>For buy</label>
+    </p-radioButton>{{'For buy' | translate}}</label>
   <label class="btn btn-default col-lg-6 col-xs-6">
     <p-radioButton name="listing_types" value="rent" formControlName="listing_type">
-    </p-radioButton>For rent</label>
+    </p-radioButton>{{'For rent' | translate}}</label>
 
     <label for="sort-by"></label>
     <select class="form-control" formControlName="sortIndex" id="sort-by">
-      <option *ngFor="let sort of sortList; let i = index" value="{{i}}">{{sort}}</option>
+      <option *ngFor="let sort of sortList; let i = index" value="{{i}}">{{sort | translate}}</option>
     </select>
 
     <label for="beds">Beds</label>
     <div class="input-group col-lg-12 col-xs-12" id="beds">
       <div *ngFor="let num of form.controls['beds'].controls; let i = index">
         <label  *ngIf="i === 0" class="btn btn-default col-lg-12 col-xs-12">
-          <p-checkbox [formControl]="num" value=0></p-checkbox>Studio
+          <p-checkbox [formControl]="num" value=0></p-checkbox>{{'Studio' | translate}}
         </label>
         <label  *ngIf="i !== 0" class="btn btn-default col-lg-3 col-xs-3">
           <p-checkbox *ngIf="i !== 0" [formControl]="num" value={{i}}></p-checkbox>{{i}}
@@ -29,13 +29,13 @@
     <div class="input-group col-lg-12 col-xs-12" id="property_type">
       <label class="btn btn-default col-lg-12 col-xs-4">
         <p-radioButton name="property_type" value="All" formControlName="property_type">
-        </p-radioButton>All</label>
+        </p-radioButton>{{'All' | translate}}</label>
       <label class="btn btn-default col-lg-6 col-xs-4">
         <p-radioButton name="property_type" value="Flat" formControlName="property_type">
-        </p-radioButton>Flat</label>
+        </p-radioButton>{{'Flat' | translate}}</label>
       <label class="btn btn-default col-lg-6 col-xs-4">
         <p-radioButton name="property_type" value="House" formControlName="property_type">
-        </p-radioButton>House</label>
+        </p-radioButton>{{'House' | translate}}</label>
     </div>
 
     <label for="baths">Bathrooms</label>
@@ -47,7 +47,7 @@
       </div>
     </div>
 
-    <label>Range: {{form.controls['price'].value[0] | json}} - {{form.controls['price'].value[1] | json}}</label>
+    <label>{{'Range' | translate}}: {{form.controls['price'].value[0] | json}} - {{form.controls['price'].value[1] | json}}</label>
     <p-slider formControlName="price" [range]="true" [min]="0" [max]="100000"></p-slider>
 
   </form>

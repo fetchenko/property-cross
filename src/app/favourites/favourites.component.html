@@ -1,21 +1,21 @@
 <div class="row col-lg-8 col-lg-offset-2">
   <div class="panel-group">
-    <div *ngFor="let favourite of favourites; let i = index" class="panel panel-default" >
+    <div *ngFor="let favourite of favourites" class="panel panel-default" >
       <a class="thumbnail col-lg-4 col-xs-12">
         <img [src]="favourite['img_url']" class="img-rounded">
       </a>
       <div class="row col-lg-8 col-xs-12">
         <h4 class="container col-lg-11 col-xs-9">{{favourite['title']}}</h4>
         <div class="container col-lg-1 col-xs-3">
-          <button class="btn btn-default" (click)="unfavourite(favourite)">
+          <button class="btn btn-default" [class.favourite]="isFavourite(favourite)" (click)="onFavourite(favourite)">
             <span class="glyphicon glyphicon-star"></span>
           </button>
         </div>
       </div>
       <div class="container col-lg-7 col-xs-12">
-        <h4><span class="label label-default">Price {{favourite['price_formatted']}}</span></h4>
-        <p>{{favourite['property_type']}} for {{favourite['listing_type']}}</p>
-        <p>Baths  : {{favourite['bathroom_number']}} Beds : {{favourite['bedroom_number']}} </p>
+        <h4><span class="label label-default">{{'Price' | translate}} {{favourite['price_formatted']}}</span></h4>
+        <p>{{favourite['property_type'] | translate}} {{'for' | translate}} {{favourite['listing_type'] | translate}}</p>
+        <p>{{'Baths' | translate}} : {{favourite['bathroom_number']}} {{'Beds' | translate}} : {{favourite['bedroom_number']}} </p>
       </div>
     </div>
   </div>

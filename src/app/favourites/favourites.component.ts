@@ -19,7 +19,25 @@ export class FavouritesComponent implements OnInit {
     }
   }
 
-  public unfavourite(index) {
+  isFavourite(property: any) {
+    if (this.favourites) {
+      for (let index = 0; index < this.favourites.length; index++) {
+        if (this.favourites[index]['lister_url'] === property['lister_url'])
+          return true;
+      }
+    }
+    return false;
+  }
+
+  public onFavourite(propertyResponse: any) {
+    if  (!this.isFavourite(propertyResponse)) {
+      this.favourites.push(propertyResponse);
+    } else {
+      this.favourites = this.favourites.filter(function (favourite) {
+        return favourite['lister_url'] !== propertyResponse['lister_url'];
+      });
+    }
+    this.localStorageService.set('favourites', JSON.stringify(this.favourites));
   }
 
 }

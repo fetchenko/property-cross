@@ -11,7 +11,7 @@
 <div class="row col-lg-7 col-lg-offset-1">
   <div *ngIf="isLoading" class="loader col-lg-offset-4 col-xs-6"></div>
 
-  <label *ngIf="!isLoading" for="panel">Founded {{numProperties}}</label>
+  <label *ngIf="!isLoading" for="panel">{{'Founded' | translate}} {{numProperties}}</label>
     <div *ngIf="!isLoading" class="panel-group" id="panel">
       <div *ngFor="let res of resultProperties" class="panel panel-default">
           <a class="thumbnail col-lg-4 col-xs-12">
@@ -20,28 +20,28 @@
           <div class="row col-lg-8 col-xs-12">
             <h4 class="container col-lg-11 col-xs-9">{{res['title']}}</h4>
             <div class="container col-lg-1 col-xs-3">
-              <button class="btn btn-default" [class.favourite]="isFavourite(res)" (click)="saveFavourite(res)">
+              <button class="btn btn-default" [class.favourite]="isFavourite(res)" (click)="onFavourite(res)">
                 <span class="glyphicon glyphicon-star"></span>
               </button>
             </div>
           </div>
           <div class="container col-lg-7 col-xs-12">
             <h4><span class="label label-default">Price {{res['price_formatted']}}</span></h4>
-            <p>{{res['property_type']}} for {{res['listing_type']}}</p>
-            <p>Baths  : {{res['bathroom_number']}} Beds : {{res['bedroom_number']}} </p>
+            <p>{{res['property_type'] | translate}} {{'for' | translate}} {{res['listing_type'] |  translate}}</p>
+            <p>{{'Baths' | translate}}  : {{res['bathroom_number']}} {{'Beds' | translate}} : {{res['bedroom_number']}} </p>
           </div>
       </div>
     </div>
 
   <ul *ngIf="pager.pages && pager.pages.length && !isLoading" class="pagination">
     <li [ngClass]="{disabled:pager.currentPage === 1}">
-      <a (click)="searchProperties(1)">First</a>
+      <a (click)="searchProperties(1)">{{'First' | translate}}</a>
     </li>
     <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
       <a (click)="searchProperties(page)">{{page}}</a>
     </li>
     <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-      <a (click)="searchProperties(pager.totalPages)">Last</a>
+      <a (click)="searchProperties(pager.totalPages)">{{'Last' | translate}}</a>
     </li>
   </ul>
 </div>

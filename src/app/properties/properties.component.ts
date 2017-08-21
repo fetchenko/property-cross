@@ -74,13 +74,18 @@ export class PropertiesComponent implements OnInit {
         this.searchProperties(1);
       });
       this.favourite = this.localStorageService.get('favourites');
-      this.favourites = JSON.parse(this.favourite);
+      this.favourite = JSON.parse(this.favourite);
+      if (this.favourite)
+        this.favourites = this.favourite;
   }
 
   isFavourite(property: any) {
-    for (let index = 0; index < this.favourites.length; index++)
-      if (this.favourites[index]['lister_url'].includes(property['lister_url']))
+    if (this.favourites) {
+    for (let index = 0; index < this.favourites.length; index++) {
+      if (this.favourites[index]['lister_url'] === property['lister_url'])
         return true;
+      }
+    }
     return false;
   }
 
@@ -95,14 +100,19 @@ export class PropertiesComponent implements OnInit {
       .subscribe((resp: any) => {
       this.resultProperties = resp['response']['listings'];
       this.numProperties = resp['response']['total_results'];
-      console.log(this.resultProperties);
       this.setPage(page);
       this.isLoading = false;
       });
   }
 
-  public saveFavourite(propertyResponse: any) {
-    this.favourites.push(propertyResponse);
+  public onFavourite(propertyResponse: any) {
+    if  (!this.isFavourite(propertyResponse)) {
+      this.favourites.push(propertyResponse);
+    } else {
+      this.favourites = this.favourites.filter(function (favourite) {
+        return favourite['lister_url'] !== propertyResponse['lister_url'];
+      });
+    }
     this.localStorageService.set('favourites', JSON.stringify(this.favourites));
   }
 

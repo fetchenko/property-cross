@@ -22,6 +22,10 @@ import { SliderModule } from 'primeng/primeng';
 import { CheckboxModule } from 'primeng/primeng';
 import { RadioButtonModule } from 'primeng/primeng';
 
+import { TRANSLATION_PROVIDERS, TranslatePipe, TranslateService } from './translate/index';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +35,7 @@ import { RadioButtonModule } from 'primeng/primeng';
     PropertiesComponent,
     FavouritesComponent,
     HomeComponent,
+    TranslatePipe
   ],
   imports: [
     BrowserModule,
@@ -47,7 +52,11 @@ import { RadioButtonModule } from 'primeng/primeng';
       storageType: 'localStorage'
     })
   ],
-  providers: [ HttpService, SelectedLocationService ],
+  providers: [ HttpService,
+    SelectedLocationService,
+    TRANSLATION_PROVIDERS,
+    TranslateService
+  ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
