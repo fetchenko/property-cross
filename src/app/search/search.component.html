@@ -1,18 +1,18 @@
-<div class="container col-lg-12">
-  <div class="row col-lg-8 col-lg-offset-1">
+<div class="container col-lg-12 col-xs-12">
+  <div class="row col-lg-8 col-lg-offset-1 col-xs-12">
     <div class="input-group">
       <div class="input-group-btn">
-        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+        <button class="btn btn-default dropdown-toggle col-xs-12" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">{{selectedLocation.country_name}}<span class="caret"></span>
         </button>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu col-xs-12">
           <li *ngFor="let country of countries">
             <a (click)="setCountry(country)">{{country.country_name}}</a>
           </li>
         </ul>
       </div>
 
-      <input class="form-control" [(ngModel)]="city"  (keyup)="onKey(city)" placeholder="Enter city">
+      <input class="form-control" [(ngModel)]="city" (keyup)="onKey(city)" placeholder="Enter city">
       <ul class="list-group">
         <li class="list-group-item" *ngFor="let foundCity of foundCities">
           <a (click)="setSelectedCity(foundCity.name); sendSelectedLocation();" routerLink="/property">{{foundCity.name}}</a>
@@ -21,14 +21,9 @@
     </div>
   </div>
 
-
-<button class="btn btn-default" (click)="sendSelectedLocation(); setSelectedCity(city);" routerLink="/property">
-  <span class="glyphicon glyphicon-search"></span>
-</button>
-  <!--
-<button class="btn btn-default" (click)="sendSelectedLocation(); searchGeoLocation();" routerLink="/property">
-  <span class="glyphicon glyphicon-globe"></span>
-</button>-->
+  <button class="btn btn-default" (click)="sendSelectedLocation(); setSelectedCity(city);" routerLink="/property">
+    <span class="glyphicon glyphicon-search"></span>
+  </button>
 
 </div>
 

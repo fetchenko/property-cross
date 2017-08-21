@@ -1,29 +1,49 @@
+<div class="attribution col-lg-3 col-lg-offset-1">
+  <a href="https://www.nestoria.co.uk">
+    <img src="https://resources.nestimg.com/nestoria/img/pbr_v1.png" alt="powered by nestoria.co.uk" width="200" height="22" style="border:0; padding:0px;" /></a>
+</div>
+<div class="container col-lg-7">
+  <app-search></app-search>
+</div>
+
 <app-filters (onAddFilter)="onAddFilter($event)"></app-filters>
 
 <div class="row col-lg-7 col-lg-offset-1">
-  <app-search></app-search>
+  <div *ngIf="isLoading" class="loader col-lg-offset-4 col-xs-6"></div>
 
-  <label for="panel">Founded {{resultNum}}</label>
-    <div class="panel-group" id="panel">
-      <div class="panel panel-default" *ngFor="let res of result">
-          <a class="thumbnail col-lg-4">
+  <label *ngIf="!isLoading" for="panel">Founded {{numProperties}}</label>
+    <div *ngIf="!isLoading" class="panel-group" id="panel">
+      <div *ngFor="let res of resultProperties" class="panel panel-default">
+          <a class="thumbnail col-lg-4 col-xs-12">
             <img [src]="res['img_url']" class="img-rounded">
           </a>
-          <div class="description col-lg-6 col-lg-offset-1">
-            <p>{{res['title']}}</p>
-            <p>bathroom number : {{res['bathroom_number']}}</p>
-            <p>bedroom number : {{res['bedroom_number']}}</p>
-            <p>For {{res['listing_type']}}</p>
-            <p>Price {{res['price_formatted']}}</p>
-            <p>Type {{res['property_type']}}</p>
-         </div>
-        <div class="btn-favourite col-lg-1">
-          <button class="btn btn-default" (click)="saveFavourite(res)">
-            <span class="glyphicon glyphicon-star"></span>
-          </button>
-        </div>
+          <div class="row col-lg-8 col-xs-12">
+            <h4 class="container col-lg-11 col-xs-9">{{res['title']}}</h4>
+            <div class="container col-lg-1 col-xs-3">
+              <button class="btn btn-default" [class.favourite]="isFavourite(res)" (click)="saveFavourite(res)">
+                <span class="glyphicon glyphicon-star"></span>
+              </button>
+            </div>
+          </div>
+          <div class="container col-lg-7 col-xs-12">
+            <h4><span class="label label-default">Price {{res['price_formatted']}}</span></h4>
+            <p>{{res['property_type']}} for {{res['listing_type']}}</p>
+            <p>Baths  : {{res['bathroom_number']}} Beds : {{res['bedroom_number']}} </p>
+          </div>
       </div>
     </div>
+
+  <ul *ngIf="pager.pages && pager.pages.length && !isLoading" class="pagination">
+    <li [ngClass]="{disabled:pager.currentPage === 1}">
+      <a (click)="searchProperties(1)">First</a>
+    </li>
+    <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+      <a (click)="searchProperties(page)">{{page}}</a>
+    </li>
+    <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+      <a (click)="searchProperties(pager.totalPages)">Last</a>
+    </li>
+  </ul>
 </div>
 
 

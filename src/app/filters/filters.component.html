@@ -1,10 +1,10 @@
 <div class="row col-lg-2 col-lg-offset-1 col-xs-12">
   <form [formGroup]="form" (ngSubmit)="addFilter(form)">
 
-  <label class="btn btn-default col-lg-6">
+  <label class="btn btn-default col-lg-6 col-xs-6">
     <p-radioButton name="listing_types" value="buy" formControlName="listing_type">
     </p-radioButton>For buy</label>
-  <label class="btn btn-default col-lg-6">
+  <label class="btn btn-default col-lg-6 col-xs-6">
     <p-radioButton name="listing_types" value="rent" formControlName="listing_type">
     </p-radioButton>For rent</label>
 
@@ -14,43 +14,42 @@
     </select>
 
     <label for="beds">Beds</label>
-    <div class="input-group col-lg-12" id="beds">
+    <div class="input-group col-lg-12 col-xs-12" id="beds">
       <div *ngFor="let num of form.controls['beds'].controls; let i = index">
-        <label  *ngIf="i === 0" class="btn btn-default col-lg-12">
+        <label  *ngIf="i === 0" class="btn btn-default col-lg-12 col-xs-12">
           <p-checkbox [formControl]="num" value=0></p-checkbox>Studio
         </label>
-        <label  *ngIf="i !== 0" class="btn btn-default col-lg-3">
+        <label  *ngIf="i !== 0" class="btn btn-default col-lg-3 col-xs-3">
           <p-checkbox *ngIf="i !== 0" [formControl]="num" value={{i}}></p-checkbox>{{i}}
         </label>
       </div>
     </div>
 
     <label for="property_type">Property type</label>
-    <div class="input-group col-lg-12" id="property_type">
-      <label class="btn btn-default col-lg-12">
+    <div class="input-group col-lg-12 col-xs-12" id="property_type">
+      <label class="btn btn-default col-lg-12 col-xs-4">
         <p-radioButton name="property_type" value="All" formControlName="property_type">
         </p-radioButton>All</label>
-      <label class="btn btn-default col-lg-6">
+      <label class="btn btn-default col-lg-6 col-xs-4">
         <p-radioButton name="property_type" value="Flat" formControlName="property_type">
         </p-radioButton>Flat</label>
-      <label class="btn btn-default col-lg-6">
+      <label class="btn btn-default col-lg-6 col-xs-4">
         <p-radioButton name="property_type" value="House" formControlName="property_type">
         </p-radioButton>House</label>
     </div>
 
     <label for="baths">Bathrooms</label>
-    <div class="input-group col-lg-12" id="baths">
+    <div class="input-group col-lg-12 col-xs-12" id="baths">
       <div *ngFor="let num of form.controls['bathrooms'].controls; let i = index">
-        <label class="btn btn-default col-lg-3">
+        <label class="btn btn-default col-lg-3 col-xs-3">
           <p-checkbox [formControl]="num" value={{i}}></p-checkbox>{{i + 1}}
         </label>
       </div>
     </div>
 
     <label>Range: {{form.controls['price'].value[0] | json}} - {{form.controls['price'].value[1] | json}}</label>
-    <p-slider formControlName="price" [range]="true" [min]="0" [max]="9999999"></p-slider>
+    <p-slider formControlName="price" [range]="true" [min]="0" [max]="100000"></p-slider>
 
-   <!-- <p>{{form.value | json}}</p>-->
   </form>
 </div>
 

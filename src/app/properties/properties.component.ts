@@ -1,16 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/map';
+import * as _ from 'underscore';
 
 import { HttpService } from '../service/http.service';
 import { SelectedLocationService } from '../service/selected-location-service';
 import { LocalStorageService } from 'angular-2-local-storage';
 
 import { Location } from '../service/lotacion';
-
-import { servers } from '../app-const-servers';
 import { Servers } from '../servers';
-import {Filters} from '../filters';
+import { servers } from '../app-const-servers';
 
 @Component({
   selector: 'app-properties',
@@ -18,39 +17,39 @@ import {Filters} from '../filters';
   styleUrls: ['./properties.component.css']
 })
 export class PropertiesComponent implements OnInit {
-  sortList = ['Relevancy', 'bedroom_lowhigh', 'bedroom_highlow', 'price_lowhigh', 'price_highlow',  'newest', 'oldest'];
-  selectedBeds: number[] = [];
-  selectedBaths: number[] = [];
+  public sortList = ['Relevancy', 'bedroom_lowhigh', 'bedroom_highlow', 'price_lowhigh', 'price_highlow',  'newest', 'oldest'];
+  private selectedBeds: number[] = [];
+  private selectedBaths: number[] = [];
 
-  servers = servers;
-  currentServer: Servers[] = [];
-  result: string[];
-  resultNum: number;
+  public servers = servers;
+  public currentServer: Servers[] = [];
+  public resultProperties: string[];
+  public numProperties: number;
+  public isLoading = true;
 
-  favourites: any[] = [];
-  favourite: any;
+  public pager: any = {};
 
-  location: any;
-  selectedLocation: Location;
-  subscription: Subscription;
+  private favourites: any[] = [];
+  private favourite: any;
 
-  filter: Filters;
+  private location: any;
+  public selectedLocation: Location;
+  private subscription: Subscription;
 
-  options: any = {
+  public options: any = {
     action: 'search_listings',
     callback: 'JSONP_CALLBACK',
     encoding: 'json',
     page: 1,
-    number_of_results: 15,
+    number_of_results: 10,
     language: 'en',
-    place_name: null,
-    centre_point: '51.684183,-3.431481',
+    place_name: '',
     sort: 'relevancy',
     listing_type: 'rent',
     price_min: 0,
     price_max: 999999999,
-    bedroom_min: 2,
-    bedroom_max: 2,
+    bedroom_min: 0,
+    bedroom_max: 4,
     bathroom_min: 0,
     bathroom_max: 4,
     has_photo: 1
@@ -61,62 +60,64 @@ export class PropertiesComponent implements OnInit {
               private localStorageService: LocalStorageService) {}
 
   ngOnInit() {
-    /* location from search, home */
     this.location = this.localStorageService.get('selectedLocation');
     this.selectedLocation = JSON.parse(this.location);
-  //  console.log(this.selectedLocation);
     if (this.selectedLocation) {
       this.options.place_name = this.selectedLocation.city_name;
-      this.searchProperties();
+      this.searchProperties(1);
     }
-    /* location from search */
     this.subscription = this.selectedLocationService.getSelectedLocation()
       .subscribe(location => {
         this.location = location;
         this.selectedLocation = this.location.text;
         this.options.place_name = this.selectedLocation.city_name;
-        this.searchProperties();
+        this.searchProperties(1);
       });
-    /* faves from LS */
-    for (let index = 0; index < this.localStorageService.length(); index++) {
-      let key = 'favourite' + index.toString();
-      this.favourite = this.localStorageService.get(key);
-      this.favourites.push(JSON.parse(this.favourite));
-    }
+      this.favourite = this.localStorageService.get('favourites');
+      this.favourites = JSON.parse(this.favourite);
   }
 
-  searchProperties() {
+  isFavourite(property: any) {
+    for (let index = 0; index < this.favourites.length; index++)
+      if (this.favourites[index]['lister_url'].includes(property['lister_url']))
+        return true;
+    return false;
+  }
+
+  public searchProperties(page: number) {
+    this.options.page = page;
+    this.isLoading = true;
     this.identifyUrl(this.selectedLocation);
     this.http.getJsonpData(this.currentServer[0].url, this.options)
       .map((resp: any) => {
         return resp.json();
       })
       .subscribe((resp: any) => {
-      this.result = resp['response']['listings'];
-      this.resultNum = resp['response']['total_results'];
+      this.resultProperties = resp['response']['listings'];
+      this.numProperties = resp['response']['total_results'];
+      console.log(this.resultProperties);
+      this.setPage(page);
+      this.isLoading = false;
       });
   }
 
-  /* favourite to LS */
-  saveFavourite(propertyResponse: any) {
-    let key;
-    key = 'favourite' + this.localStorageService.length().toString();
-    this.localStorageService.set(key, JSON.stringify(propertyResponse));
+  public saveFavourite(propertyResponse: any) {
+    this.favourites.push(propertyResponse);
+    this.localStorageService.set('favourites', JSON.stringify(this.favourites));
   }
 
-  identifyUrl(location: Location) {
+  private identifyUrl(location: Location) {
     this.currentServer = this.servers.filter(function (server) {
       return server.country_code.toLowerCase() === location.country_code.toLowerCase();
     });
   }
 
-  onAddFilter(form) {
+  public onAddFilter(form) {
     this.setOptions(form);
-    this.searchProperties();
+    this.searchProperties(this.options.page);
   }
 
-  setOptions(form) {
-    console.log(form.beds);
+  private setOptions(form) {
     this.options.listing_type = form.listing_type;
     this.options.sort = this.sortList[form.sortIndex];
 
@@ -128,7 +129,7 @@ export class PropertiesComponent implements OnInit {
 
     this.selectedBeds = [];
     for (let index = 0; index < form.beds.length; index++) {
-      if (form.beds[index])
+      if (form.beds[index][0])
         this.selectedBeds.push(index);
     }
     this.options.bedroom_min = this.selectedBeds[0];
@@ -136,7 +137,7 @@ export class PropertiesComponent implements OnInit {
 
     this.selectedBaths = [];
     for (let index = 0; index < form.bathrooms.length; index++) {
-      if (form.bathrooms[index])
+      if (form.bathrooms[index][0])
         this.selectedBaths.push(index + 1);
     }
     this.options.bathroom_min = this.selectedBaths[0];
@@ -144,6 +145,44 @@ export class PropertiesComponent implements OnInit {
 
     this.options.price_min = form.price[0];
     this.options.price_max = form.price[1];
-    console.log(this.options);
+  }
+
+  public setPage(page: number) {
+    if (page < 1 || page > this.pager.totalPages) {
+      return;
+    }
+    this.pager = this.getPager(this.numProperties, page);
+  }
+
+  getPager(totalItems: number, currentPage: number = 1, pageSize: number = 10) {
+    let totalPages = Math.ceil(totalItems / pageSize);
+
+    let startPage: number, endPage: number;
+    if (totalPages <= 10) {
+      startPage = 1;
+      endPage = totalPages;
+    } else {
+      if (currentPage <= 6) {
+        startPage = 1;
+        endPage = 10;
+      } else if (currentPage + 4 >= totalPages) {
+        startPage = totalPages - 9;
+        endPage = totalPages;
+      } else {
+        startPage = currentPage - 5;
+        endPage = currentPage + 4;
+      }
+    }
+    let pages = _.range(startPage, endPage + 1);
+
+    return {
+      totalItems: totalItems,
+      currentPage: currentPage,
+      pageSize: pageSize,
+      totalPages: totalPages,
+      startPage: startPage,
+      endPage: endPage,
+      pages: pages
+    };
   }
 }

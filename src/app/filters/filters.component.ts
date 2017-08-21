@@ -1,6 +1,5 @@
-import {Component, Inject, Output, EventEmitter, AfterViewInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormControlName, FormGroup, Validators} from '@angular/forms';
-import {SliderModule} from 'primeng/primeng';
+import {Component, Inject, Output, EventEmitter} from '@angular/core';
+import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-filters',
@@ -8,8 +7,8 @@ import {SliderModule} from 'primeng/primeng';
   styleUrls: ['./filters.component.css']
 })
 export class FiltersComponent {
-  sortList = ['Relevancy', 'Bedroom (low to high)', 'Bedroom (high to low)', 'Price (low to high)', 'Price (high to low)', 'Newest', 'Oldest'];
-  form: FormGroup;
+  public sortList = ['Relevancy', 'Bedroom (low to high)', 'Bedroom (high to low)', 'Price (low to high)', 'Price (high to low)', 'Newest', 'Oldest'];
+  public form: FormGroup;
 
   @Output() onAddFilter = new EventEmitter<FormGroup>();
   addFilter(form) {

@@ -1,3 +1,5 @@
-.selected {
-  background-color: gray;
+@media (max-width: 575px) {
+  label {
+    font-size: small;
+  }
 }

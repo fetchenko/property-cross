@@ -1,8 +1,26 @@
+@media (max-width: 575px) {
+  ul,
+  li,
+  a {
+    font-size: 10px;
+  }
+  button,
+  input {
+    font-size: 10px;
+  }
+  .form-control {
+    max-height: 30px;
+  }
+  .container {
+    display: flex;
+  }
+}
 .list-group {
   position: absolute;
   z-index: 3;
   padding-top: 30px;
 }
 .container {
-  margin-bottom: 2%;
+  margin-bottom: 4%;
+  margin-top: 4%;
 }

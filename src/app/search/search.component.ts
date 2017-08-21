@@ -21,29 +21,21 @@ export class SearchComponent implements OnInit, DoCheck {
   private cities: Cities[] = [];
   private citiesOfCountry: Cities[] = [];
   public foundCities: Cities[] = [];
-  selectedLocation: Location = this.countries[0];
-  city = null;
-  latestSearches: Location[] = [];
-  location: any;
-
-  myLocation: any;
+  public selectedLocation: Location = this.countries[0];
+  public city;
+  public latestSearches: Location[] = [];
+  public location: any;
 
   constructor(private httpService: HttpService,
     private selectedLocationService: SelectedLocationService,
     private localStorageService: LocalStorageService) {  }
 
   ngOnInit() {
-      /* cities from json file */
     this.httpService.getData()
       .subscribe((data: Response) => this.cities = data.json());
-    /* latest location from LS */
-    for (let index = 0; index < this.localStorageService.length(); index++) {
-      let key = 'location' + index.toString();
-      this.location = this.localStorageService.get(key);
-      this.latestSearches.push(JSON.parse(this.location));
-    }
-    this.latestSearches = this.latestSearches.splice(this.latestSearches.length - 6, this.latestSearches.length);
-    this.selectedLocation = this.latestSearches[5];
+      this.location = this.localStorageService.get('locations');
+      if (this.location)
+        this.latestSearches = JSON.parse(this.location);
   }
 
   ngDoCheck() {
@@ -60,44 +52,30 @@ export class SearchComponent implements OnInit, DoCheck {
     this.foundCities = this.foundCities.splice(0, 6);
   }
 
-  /* location to property */
-  sendSelectedLocation() {
+  public sendSelectedLocation() {
     this.localStorageService.set('selectedLocation', JSON.stringify(this.selectedLocation));
     this.selectedLocationService.sendSelectedLocation(this.selectedLocation);
   }
 
-  onKey(city: string) {
+  public onKey(city: string) {
     this.city = city;
   }
 
-  setSelectedCity(city: string) {
+  public setSelectedCity(city: string) {
     this.selectedLocation.city_name = city;
     this.city = city + '  ';
     this.foundCities = [];
     this.saveSearchedLocation();
   }
 
-  /* save location to LS */
-  saveSearchedLocation () {
-    let key = '';
-    key = 'location' + this.localStorageService.length().toString();
-    this.localStorageService.set(key, JSON.stringify(this.selectedLocation));
+  public saveSearchedLocation () {
+    this.latestSearches.push(this.selectedLocation);
+    if (this.latestSearches.length > 5)
+      this.latestSearches = this.latestSearches.splice(this.latestSearches.length - 5, this.latestSearches.length - 1);
+    this.localStorageService.set('locations', JSON.stringify(this.latestSearches));
   }
 
-  setCountry(country: Location) {
+  public setCountry(country: Location) {
     this.selectedLocation = country;
   }
-
- /* setPosition(position) {
-    this.myLocation = position.coords;
-    this.selectedLocation.lat = this.myLocation.latitude;
-    this.selectedLocation.lng = this.myLocation.longitude;
-    console.log(this.selectedLocation);
-  }*/
-
- /* searchGeoLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(this.setPosition.bind(this));
-    }
-  }*/
 }
