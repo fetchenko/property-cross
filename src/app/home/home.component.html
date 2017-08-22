@@ -1,20 +1,23 @@
-<div class="row">
-  <div class="panel panel-default col-lg-6 col-lg-offset-3 col-xs-12">
-    <div class="panel-heading">
-      <div class="panel-title">{{'Property cross' | translate}}</div>
-    </div>
-    <div class="panel-body">
-      <p class="lead">{{'Use the form below to search for houses to buy.You can search by place-name, postcode, or click \'My location\', to search in your current location!' | translate}}</p>
+<div class="panel panel-default col-lg-6 col-lg-offset-3 col-xs-12">
+  <div class="panel-heading">{{'Property cross' | translate}}</div>
+  <div class="panel-body">
+    <p class="lead">{{'Use the form below to search for houses to buy.You can search by place-name, postcode, or click \'My location\', to search in your current location!' | translate}}</p>
 
-      <app-search></app-search>
+    <app-search></app-search>
 
-        <ul class="list-group col-lg-10 col-lg-offset-1 col-xs-12">
-          <li class="list-group-item list-group-item-action">{{'Latest search' | translate}}:</li>
-            <a class="list-group-item" *ngFor="let search of latestSearches.reverse()"
-               (click)="saveSelectedLocation(search)" routerLink="/property">{{search['city_name']}}
-            </a>
-        </ul>
+    <div class="container col-lg-10 col-lg-offset-1 col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">{{'Latest search' | translate}}:</div>
+          <div class="panel-body latest-searches">
+            <ul class="list-group">
+                <a class="list-group-item" *ngFor="let search of latestSearches.reverse()"
+                   (click)="saveSelectedLocation(search)" routerLink="/property">{{search['city_name']}}
+                </a>
+            </ul>
+          </div>
+      </div>
     </div>
   </div>
 </div>
+
 

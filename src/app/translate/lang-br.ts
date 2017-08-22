@@ -20,7 +20,7 @@ export const LANG_BR_TRANS = {
   'Property type' : 'Tipo de Propriedade',
   'All' : 'Todos',
   'Flat' : 'Plano',
-  'House' : 'casa',
+  'House' : 'Casa',
   'Bathrooms' : 'Banheiros',
   'Founded' : 'Fundado',
   'Price' : 'Preço',

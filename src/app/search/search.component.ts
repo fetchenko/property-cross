@@ -39,6 +39,7 @@ export class SearchComponent implements OnInit, DoCheck {
       this.location = this.localStorageService.get('locations');
       if (this.location) {
         this.latestSearches = JSON.parse(this.location);
+        console.log(this.latestSearches);
         this.selectLang(this.latestSearches[this.latestSearches.length - 1].country_code);
       }
   }

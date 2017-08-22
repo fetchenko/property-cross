@@ -2,7 +2,7 @@
   <a href="https://www.nestoria.co.uk">
     <img src="https://resources.nestimg.com/nestoria/img/pbr_v1.png" alt="powered by nestoria.co.uk" width="200" height="22" style="border:0; padding:0px;" /></a>
 </div>
-<div class="container col-lg-7">
+<div class="container col-lg-8">
   <app-search></app-search>
 </div>
 
@@ -14,22 +14,24 @@
   <label *ngIf="!isLoading" for="panel">{{'Founded' | translate}} {{numProperties}}</label>
     <div *ngIf="!isLoading" class="panel-group" id="panel">
       <div *ngFor="let res of resultProperties" class="panel panel-default">
-          <a class="thumbnail col-lg-4 col-xs-12">
-            <img [src]="res['img_url']" class="img-rounded">
-          </a>
-          <div class="row col-lg-8 col-xs-12">
-            <h4 class="container col-lg-11 col-xs-9">{{res['title']}}</h4>
-            <div class="container col-lg-1 col-xs-3">
-              <button class="btn btn-default" [class.favourite]="isFavourite(res)" (click)="onFavourite(res)">
-                <span class="glyphicon glyphicon-star"></span>
-              </button>
-            </div>
+        <a class="thumbnail col-lg-4 col-xs-12" data-toggle="modal" data-target="#propertyDetails" (click)="propertyInfo(res)">
+          <img [src]="res['img_url']" class="img-rounded">
+        </a>
+
+
+        <div class="row col-lg-8 col-xs-12">
+          <h4 class="container col-lg-11 col-xs-9">{{res['title']}}</h4>
+          <div class="container col-lg-1 col-xs-3">
+            <button class="btn btn-default" [class.btn-primary]="isFavourite(res)" (click)="onFavourite(res)">
+              <span class="glyphicon glyphicon-star"></span>
+            </button>
           </div>
-          <div class="container col-lg-7 col-xs-12">
-            <h4><span class="label label-default">Price {{res['price_formatted']}}</span></h4>
-            <p>{{res['property_type'] | translate}} {{'for' | translate}} {{res['listing_type'] |  translate}}</p>
-            <p>{{'Baths' | translate}}  : {{res['bathroom_number']}} {{'Beds' | translate}} : {{res['bedroom_number']}} </p>
-          </div>
+        </div>
+        <div class="container col-lg-7 col-xs-12">
+          <h4><span class="label label-default">Price {{res['price_formatted']}}</span></h4>
+          <p>{{res['property_type'] | translate}} {{'for' | translate}} {{res['listing_type'] |  translate}}</p>
+          <p>{{'Baths' | translate}}  : {{res['bathroom_number']}} {{'Beds' | translate}} : {{res['bedroom_number']}} </p>
+        </div>
       </div>
     </div>
 
@@ -46,4 +48,22 @@
   </ul>
 </div>
 
-
+<div *ngIf="property !== null">
+  <div class="modal fade" id="propertyDetails" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">{{property['title']}}</h4>
+        </div>
+        <div class="modal-body">
+          <h5>{{property['summary']}}</h5>
+          <img [src]="property['img_url']" class="img-rounded">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

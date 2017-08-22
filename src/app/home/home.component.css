@@ -1,13 +1,19 @@
 @media (max-width: 575px) {
   p {
     font-size: small;
+    margin-bottom: 0;
   }
   li,
   a {
     font-size: small;
   }
-  .panel-title,
-  .panel-heading {
-    display: none;
-  }
+}
+.panel {
+  padding: 0;
+}
+.latest-searches {
+  padding: 0;
+}
+.list-group {
+  display: inline;
 }

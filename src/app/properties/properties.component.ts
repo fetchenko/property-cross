@@ -36,6 +36,8 @@ export class PropertiesComponent implements OnInit {
   public selectedLocation: Location;
   private subscription: Subscription;
 
+  public property: any = null;
+
   public options: any = {
     action: 'search_listings',
     callback: 'JSONP_CALLBACK',
@@ -99,6 +101,7 @@ export class PropertiesComponent implements OnInit {
       })
       .subscribe((resp: any) => {
       this.resultProperties = resp['response']['listings'];
+      console.log(this.resultProperties);
       this.numProperties = resp['response']['total_results'];
       this.setPage(page);
       this.isLoading = false;
@@ -194,5 +197,9 @@ export class PropertiesComponent implements OnInit {
       endPage: endPage,
       pages: pages
     };
+  }
+
+  propertyInfo(property: any) {
+    this.property = property;
   }
 }
