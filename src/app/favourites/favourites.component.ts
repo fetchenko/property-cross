@@ -19,7 +19,7 @@ export class FavouritesComponent implements OnInit {
     }
   }
 
-  isFavourite(property: any) {
+  public isFavourite(property: any) {
     if (this.favourites) {
       for (let index = 0; index < this.favourites.length; index++) {
         if (this.favourites[index]['lister_url'] === property['lister_url'])
@@ -39,5 +39,4 @@ export class FavouritesComponent implements OnInit {
     }
     this.localStorageService.set('favourites', JSON.stringify(this.favourites));
   }
-
 }

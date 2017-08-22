@@ -11,10 +11,6 @@ export class SelectedLocationService {
     this.subject.next({ text: location });
   }
 
-  clearSelectedLocation() {
-    this.subject.next();
-  }
-
   getSelectedLocation(): Observable<any> {
     return this.subject.asObservable();
   }

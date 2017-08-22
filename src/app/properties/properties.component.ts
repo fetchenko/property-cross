@@ -81,7 +81,7 @@ export class PropertiesComponent implements OnInit {
         this.favourites = this.favourite;
   }
 
-  isFavourite(property: any) {
+  public isFavourite(property: any) {
     if (this.favourites) {
     for (let index = 0; index < this.favourites.length; index++) {
       if (this.favourites[index]['lister_url'] === property['lister_url'])
@@ -167,7 +167,7 @@ export class PropertiesComponent implements OnInit {
     this.pager = this.getPager(this.numProperties, page);
   }
 
-  getPager(totalItems: number, currentPage: number = 1, pageSize: number = 10) {
+  private getPager(totalItems: number, currentPage: number = 1, pageSize: number = 10) {
     let totalPages = Math.ceil(totalItems / pageSize);
 
     let startPage: number, endPage: number;
@@ -199,7 +199,7 @@ export class PropertiesComponent implements OnInit {
     };
   }
 
-  propertyInfo(property: any) {
+  public propertyInfo(property: any) {
     this.property = property;
   }
 }

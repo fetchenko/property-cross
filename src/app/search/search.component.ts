@@ -27,7 +27,6 @@ export class SearchComponent implements OnInit, DoCheck {
   public latestSearches: Location[] = [];
   public location: any;
 
-
   constructor(private httpService: HttpService,
     private selectedLocationService: SelectedLocationService,
     private localStorageService: LocalStorageService,
@@ -39,7 +38,6 @@ export class SearchComponent implements OnInit, DoCheck {
       this.location = this.localStorageService.get('locations');
       if (this.location) {
         this.latestSearches = JSON.parse(this.location);
-        console.log(this.latestSearches);
         this.selectLang(this.latestSearches[this.latestSearches.length - 1].country_code);
       }
   }
@@ -87,11 +85,11 @@ export class SearchComponent implements OnInit, DoCheck {
     this.selectLang(this.selectedLocation.country_code);
   }
 
-  selectLang(lang: string) {
+  public selectLang(lang: string) {
     this._translate.use(lang);
   }
 
-  wasSearched() {
+  public wasSearched() {
     for (let index = 0; index < this.latestSearches.length; index++) {
       if (this.latestSearches[index].city_name === this.selectedLocation.city_name &&
         this.latestSearches[index].country_code === this.selectedLocation.country_code)
