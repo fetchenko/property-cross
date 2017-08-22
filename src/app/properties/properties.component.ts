@@ -101,7 +101,6 @@ export class PropertiesComponent implements OnInit {
       })
       .subscribe((resp: any) => {
       this.resultProperties = resp['response']['listings'];
-      console.log(this.resultProperties);
       this.numProperties = resp['response']['total_results'];
       this.setPage(page);
       this.isLoading = false;

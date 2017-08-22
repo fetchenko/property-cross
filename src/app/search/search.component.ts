@@ -17,7 +17,7 @@ import { TranslateService } from '../translate/translate.service';
   providers: [HttpService]
 })
 
-export class SearchComponent implements OnInit, DoCheck {
+export class SearchComponent implements OnInit {
   public countries: Location[] = locations;
   private cities: Cities[] = [];
   private citiesOfCountry: Cities[] = [];
@@ -42,32 +42,27 @@ export class SearchComponent implements OnInit, DoCheck {
       }
   }
 
-  ngDoCheck() {
+  public sendSelectedLocation() {
+    this.localStorageService.set('selectedLocation', JSON.stringify(this.selectedLocation));
+    this.selectedLocationService.sendSelectedLocation(this.selectedLocation);
+  }
+
+  public suggestionCity(searchedCity: string) {
     this.foundCities = [];
     let self = this;
     this.citiesOfCountry = this.cities.filter(function (city) {
       return city.country === self.selectedLocation.country_code;
     });
 
-    if (this.city)
+    if (searchedCity)
       this.foundCities = this.citiesOfCountry.filter(function (city) {
-      return city.name.toLowerCase().search(self.city.toLowerCase()) === 0;
-    });
+        return city.name.toLowerCase().search(searchedCity.toLowerCase()) === 0;
+      });
     this.foundCities = this.foundCities.splice(0, 6);
   }
 
-  public sendSelectedLocation() {
-    this.localStorageService.set('selectedLocation', JSON.stringify(this.selectedLocation));
-    this.selectedLocationService.sendSelectedLocation(this.selectedLocation);
-  }
-
-  public onKey(city: string) {
-    this.city = city;
-  }
-
   public setSelectedCity(city: string) {
-    this.selectedLocation.city_name = city;
-    this.city = city + '  ';
+    this.selectedLocation.city_name = this.foundCities[0].name;
     this.foundCities = [];
     this.saveSearchedLocation();
   }
